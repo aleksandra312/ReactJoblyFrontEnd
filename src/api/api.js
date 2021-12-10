@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
-class JoblyAPI {
+class JoblyApi {
   static token;
 
   static async request(endpoint, data = {}, method = "get") {
@@ -29,6 +29,13 @@ class JoblyAPI {
     let res = await this.request(`companies/${handle}`);
     return res.company;
   }
+
+  /** Get list of all companies. */
+
+  static async getCompanies() {
+    let res = await this.request(`companies/`);
+    return res.companies;
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)
@@ -36,3 +43,5 @@ JoblyApi.token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
   "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
   "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+
+export default JoblyApi;
