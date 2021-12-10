@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./CompanyCard.css";
 
-const CompanyCard = ({ handle, name, description, logoUrl }) => {
+const CompanyCard = ({ name, description, logoUrl, handle }) => {
   return (
     <Link className="CompanyCard card" to={`/companies/${handle}`}>
       <div className="card-body">
