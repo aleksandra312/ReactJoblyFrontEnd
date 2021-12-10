@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JoblyApi from "../api/api";
 import CompanyCard from "./CompanyCard";
+import SearchForm from "../common/SearchForm";
 
 const CompanyList = ({ items }) => {
   const [companies, setCompanies] = useState([]);
@@ -10,13 +11,14 @@ const CompanyList = ({ items }) => {
     searchCompanies();
   }, []);
 
-  async function searchCompanies() {
-    let companies = await JoblyApi.getCompanies();
+  async function searchCompanies(name) {
+    let companies = await JoblyApi.getCompanies(name);
     setCompanies(companies);
   }
 
   return (
     <div className="CompanyList col-md-8 offset-md-2">
+      <SearchForm search={searchCompanies} />
       {companies.length ? (
         <div className="CompanyList-list">
           {companies.map((c) => (
