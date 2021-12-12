@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import Navigation from "./app-routes/Navigation";
 import AppRoutes from "./app-routes/AppRoutes";
 import UserContext from "./auth/UserContext";
-import JoblyApi from "../api/api";
+import JoblyApi from "./api/api";
 import jwt from "jsonwebtoken";
 
 export const TOKEN_STORAGE_ID = "jobly-token";
@@ -19,7 +19,7 @@ function App() {
         if (token) {
           try {
             JoblyApi.token = token;
-            let username = jwt.decode(token);
+            let { username } = jwt.decode(token);
             let currentUser = await JoblyApi.getCurrentUser(username);
             setCurrentUser(currentUser);
             setApplicationIds(new Set(currentUser.applications));
@@ -29,6 +29,7 @@ function App() {
           }
         }
       }
+      getCurrentUser();
     },
     [token]
   );
@@ -38,7 +39,7 @@ function App() {
       let token = await JoblyApi.login(data);
       setToken(token);
       return { success: true };
-    } catch (e) {
+    } catch (errors) {
       console.error("login failed", errors);
       return { success: false, errors };
     }
@@ -49,7 +50,7 @@ function App() {
       let token = await JoblyApi.signup(data);
       setToken(token);
       return { success: true };
-    } catch (e) {
+    } catch (errors) {
       console.error("signup failed", errors);
       return { success: false, errors };
     }
