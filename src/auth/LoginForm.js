@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import JoblyApi from "../api/api";
 import { useNavigate } from "react-router-dom";
 import Alert from "../common/Alert";
 
-const LoginForm = () => {
+const LoginForm = ({ login }) => {
   const INITIAL_STATE = { username: "", password: "" };
   const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ const LoginForm = () => {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    const res = await JoblyApi.login(formData);
+    const res = await login(formData);
     if (res.success) {
       navigate("/companies");
     } else {

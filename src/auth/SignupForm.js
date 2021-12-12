@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import JoblyApi from "../api/api";
 import { useNavigate } from "react-router-dom";
 import Alert from "../common/Alert";
 
-const SignupForm = () => {
+const SignupForm = ({ signup }) => {
   const INITIAL_STATE = {
     username: "",
     password: "",
@@ -23,7 +22,7 @@ const SignupForm = () => {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    const res = await JoblyApi.signup(formData);
+    const res = await signup(formData);
     if (res.success) {
       navigate("/companies");
     } else {
