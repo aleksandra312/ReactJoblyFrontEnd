@@ -1,6 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../auth/UserContext";
 
 const JobCard = ({ id, title, salary, equity }) => {
+  const { alreadyApplied, applyToJob } = useContext(UserContext);
+  const [applied, setApplied] = useState();
+
+  useEffect(
+    function updateApplied() {
+      setApplied(alreadyApplied(id));
+    },
+    [id, alreadyApplied]
+  );
+
+  async function handleApply(evt) {
+    if (alreadyApplied(id)) return;
+    applyToJob(id);
+    setApplied(true);
+  }
+
   return (
     <div className="JobCard card">
       <div className="card-body">
@@ -15,6 +32,13 @@ const JobCard = ({ id, title, salary, equity }) => {
             <small>Equity: {equity}</small>
           </div>
         )}
+        <button
+          className="btn btn-danger font-weight-bold text-uppercase float-right"
+          onClick={handleApply}
+          disabled={applied}
+        >
+          {applied ? "Applied" : "Apply"}
+        </button>
       </div>
     </div>
   );

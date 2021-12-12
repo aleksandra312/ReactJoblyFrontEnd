@@ -14,7 +14,7 @@ const Profile = () => {
     password: "",
   };
 
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(INITIAL_STATE);
   const [formErrors, setFormErrors] = useState([]);
 
   const handleChange = (evt) => {
@@ -85,7 +85,12 @@ const Profile = () => {
 
         {formErrors.length ? (
           <Alert type="danger" messages={formErrors} />
-        ) : null}
+        ) : (
+          <Alert
+            type="success"
+            messages={["successfully updated user info."]}
+          />
+        )}
 
         <button className="btn btn-primary btn-block mt-4">Save Changes</button>
       </form>

@@ -61,9 +61,21 @@ function App() {
     setToken("");
   }
 
+  function alreadyApplied(id) {
+    return applicationIds.has(id);
+  }
+
+  function applyToJob(id) {
+    if (alreadyApplied(id)) return;
+    JoblyApi.applyToJob(currentUser.username, id);
+    setApplicationIds(new Set([...applicationIds, id]));
+  }
+
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <UserContext.Provider
+        value={{ currentUser, setCurrentUser, alreadyApplied, applyToJob }}
+      >
         <div className="App">
           <Navigation logout={logout} />
           <AppRoutes login={login} signup={signup} />
